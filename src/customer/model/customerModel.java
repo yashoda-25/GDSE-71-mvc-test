@@ -7,7 +7,9 @@ package customer.model;
     import customer.dto.customerDto;
     import java.sql.Connection;
     import java.sql.PreparedStatement;
-
+    import java.sql.ResultSet;
+    import java.util.List;
+    import java.util.ArrayList;
 
 /**
  *
@@ -64,5 +66,44 @@ public class customerModel {
 
         int result = statement.executeUpdate();
         return result > 0 ? "Successfully Deleted" : "Fail";
+    }
+    
+    public customerDto searchCustomer(String id)throws Exception{
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM Customer WHERE CustId = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, id);
+        
+         ResultSet rst = statement.executeQuery();
+        if(rst.next()){
+            customerDto dto = new customerDto(rst.getString(1),
+                    rst.getString(2), rst.getString(3),
+                    rst.getString(4), rst.getDouble(5),
+                    rst.getString(6), rst.getString(7),
+                    rst.getString(8), rst.getString(9));
+        
+            return  dto;
+        }
+        return null;
+    }
+
+    public List<customerDto> getAllCustomer() throws Exception{
+        Connection connection = DBConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM Customer";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        List<customerDto> customerdtos = new ArrayList<>();
+
+        ResultSet rst = statement.executeQuery();
+        while(rst.next()){
+            customerDto dto = new customerDto(rst.getString(1),
+                    rst.getString(2), rst.getString(3),
+                    rst.getString(4), rst.getDouble(5),
+                    rst.getString(6), rst.getString(7),
+                    rst.getString(8), rst.getString(9));
+            customerdtos.add(dto);
+        }
+
+        return customerdtos;
     }
 }

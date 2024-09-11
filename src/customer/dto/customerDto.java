@@ -22,6 +22,10 @@ public class customerDto {
     public customerDto() {
     }
 
+    public customerDto(String string, String string0, String string1, String string2, double aDouble, String string3, String string4, String string5, String string6) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     /**
      * @return the id
      */
